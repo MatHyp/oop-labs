@@ -1,0 +1,2 @@
+/home/mateuszkubuntu/code/build/CMakeFiles/edit_cache.dir
+/home/mateuszkubuntu/code/build/CMakeFiles/rebuild_cache.dir
