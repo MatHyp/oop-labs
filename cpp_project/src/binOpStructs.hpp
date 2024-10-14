@@ -1,13 +1,9 @@
 //
-// Created by mathy on 11.10.2024.
+// Created by mateuszkubuntu on 09/10/2024.
 //
 
 #ifndef BINOPSTRUCTS_HPP
 #define BINOPSTRUCTS_HPP
-
-
-
-#endif //BINOPSTRUCTS_HPP
 #include <vector>
 using namespace std;
 
@@ -55,7 +51,7 @@ void performBinOp() {
     while (choice == 'y' || choice == 'Y') {
         ops.push_back(evaluate());
 
-        cout << "Do you want to continue ? (y / n)";
+        cout << "Press enter to add other: ";
         cin >> choice;
         cin.ignore();
     }
@@ -71,3 +67,5 @@ void performBinOp() {
         delete ops[i];
     }
 }
+
+#endif //BINOPSTRUCTS_HPP
