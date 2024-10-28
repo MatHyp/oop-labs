@@ -6,6 +6,8 @@
 #define BINOPCLASS_HPP
 using namespace std;
 
+
+
 class BinOpClass {
     public:
     BinOpClass() {

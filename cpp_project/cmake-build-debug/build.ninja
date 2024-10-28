@@ -55,6 +55,12 @@ build CMakeFiles/cpp_project.dir/main.cpp.obj: CXX_COMPILER__cpp_project_unscann
   OBJECT_DIR = CMakeFiles\cpp_project.dir
   OBJECT_FILE_DIR = CMakeFiles\cpp_project.dir
 
+build CMakeFiles/cpp_project.dir/src/Item.cpp.obj: CXX_COMPILER__cpp_project_unscanned_Debug C$:/Users/mathy/CLionProjects/oop-labs/cpp_project/src/Item.cpp || cmake_object_order_depends_target_cpp_project
+  DEP_FILE = CMakeFiles\cpp_project.dir\src\Item.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\cpp_project.dir
+  OBJECT_FILE_DIR = CMakeFiles\cpp_project.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target cpp_project
@@ -63,7 +69,7 @@ build CMakeFiles/cpp_project.dir/main.cpp.obj: CXX_COMPILER__cpp_project_unscann
 #############################################
 # Link the executable cpp_project.exe
 
-build cpp_project.exe: CXX_EXECUTABLE_LINKER__cpp_project_Debug CMakeFiles/cpp_project.dir/main.cpp.obj
+build cpp_project.exe: CXX_EXECUTABLE_LINKER__cpp_project_Debug CMakeFiles/cpp_project.dir/main.cpp.obj CMakeFiles/cpp_project.dir/src/Item.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\cpp_project.dir

@@ -1,0 +1,12 @@
+Grocery
+Apple
+1.99
+1.5
+Electronics
+Laptop
+999.99
+2
+Clothing
+T-shirt
+19.99
+L
