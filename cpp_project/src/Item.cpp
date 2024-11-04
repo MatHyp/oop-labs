@@ -8,91 +8,55 @@ void Item::display() const {
     std::cout << "Name: " << name << ", Price: $" << price << std::endl;
 }
 
-void Item::persist_common(std::ofstream& out) const {
+void Item::persist_common(std::ostream& out) const {
     out << name << "\n" << price << "\n";
 }
 
-void Item::restore_common(std::ifstream& in) {
+void Item::persistBinary_common(std::ofstream& out) const {
+    out.write(name.c_str(), name.size() + 1);
+    out.write(reinterpret_cast<const char*>(&price), sizeof(price));
+}
+
+void Item::restore_common(std::istream& in) {
     in >> name >> price;
 }
 
-Item* Item::restore(std::ifstream& in) {
+void Item::restoreBinary_common(std::ifstream& in) {
+    std::getline(in, name, '\0');
+    in.read(reinterpret_cast<char*>(&price), sizeof(price));
+}
+
+// Non-member overloads for << and >>
+std::ostream& operator<<(std::ostream& out, const Item& item) {
+    item.persist(out);
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Item*& item) {
     std::string type;
     in >> type;
     if (type == "Grocery") {
-        return Grocery::restore(in);
+        item = Grocery::restore(in).release();
     } else if (type == "Electronics") {
-        return Electronics::restore(in);
+        item = Electronics::restore(in).release();
     } else if (type == "Clothing") {
-        return Clothing::restore(in);
+        item = Clothing::restore(in).release();
     }
-    // Additional types can be handled similarly
+    return in;
+}
+
+
+
+// Binary restore and persist for Item
+std::unique_ptr<Item> Item::restoreBinary(std::ifstream& in) {
+    std::string type;
+    std::getline(in, type, '\0');
+    if (type == "Grocery") {
+        return Grocery::restoreBinary(in);
+    } else if (type == "Electronics") {
+        return Electronics::restoreBinary(in);
+    } else if (type == "Clothing") {
+        return Clothing::restoreBinary(in);
+    }
     return nullptr;
-}
-
-// Derived class: Grocery
-Grocery::Grocery(const std::string& name, double price, double weight)
-    : Item(name, price), weight(weight) {}
-
-void Grocery::display() const {
-    Item::display();
-    std::cout << "Weight: " << weight << " kg" << std::endl;
-}
-
-void Grocery::persist(std::ofstream& out) const {
-    out << "Grocery\n";
-    persist_common(out);
-    out << weight << "\n";
-}
-
-Grocery* Grocery::restore(std::ifstream& in) {
-    std::string name;
-    double price, weight;
-    in >> name >> price >> weight;
-    return new Grocery(name, price, weight);
-}
-
-// Derived class: Electronics
-Electronics::Electronics(const std::string& name, double price, int warranty_years)
-    : Item(name, price), warranty_years(warranty_years) {}
-
-void Electronics::display() const {
-    Item::display();
-    std::cout << "Warranty: " << warranty_years << " years" << std::endl;
-}
-
-void Electronics::persist(std::ofstream& out) const {
-    out << "Electronics\n";
-    persist_common(out);
-    out << warranty_years << "\n";
-}
-
-Electronics* Electronics::restore(std::ifstream& in) {
-    std::string name;
-    double price;
-    int warranty_years;
-    in >> name >> price >> warranty_years;
-    return new Electronics(name, price, warranty_years);
-}
-
-// Derived class: Clothing
-Clothing::Clothing(const std::string& name, double price, const std::string& size)
-    : Item(name, price), size(size) {}
-
-void Clothing::display() const {
-    Item::display();
-    std::cout << "Size: " << size << std::endl;
-}
-
-void Clothing::persist(std::ofstream& out) const {
-    out << "Clothing\n";
-    persist_common(out);
-    out << size << "\n";
-}
-
-Clothing* Clothing::restore(std::ifstream& in) {
-    std::string name, size;
-    double price;
-    in >> name >> price >> size;
-    return new Clothing(name, price, size);
 }
